@@ -1,11 +1,16 @@
 #! /usr/bin/env python
 
+__version__ = '0.1.0'
+__all__ = [
+    'execmd',
+]
+
 import argparse
 import os
 import signal
 import subprocess
 
-def execmd(command, timeout=30):
+def execmd(command, timeout=60):
 	"""
 	Executes the specified command on command line and reports results.
 
