@@ -32,32 +32,17 @@ def execmd(command, timeout=30):
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='This script executes the specified command and reports results')
 	parser.add_argument("-t", "--timeout", default=30, help="Specify amount of time in seconds to kill command if it doesn't return in time.")
-	parser.add_argument("-s", "--silent", action='store_true', default=False, help="Specify suppressing command output or not.")
+	parser.add_argument("-s", "--silent", default=False, help="Specify suppressing command output or not.")
 	parser.add_argument("-c", "--command", nargs='+', help="Specify the command and its arguments to execute and report on.")
 	args = parser.parse_args()
 	cmd = tuple(args.command)
 	cmd_str = " ".join(args.command)
 	results = execmd(cmd_str, int(args.timeout))
 	if (not bool(args.silent)):
-		s = f"""
-	Command Results:
-
-	Command: '{args.command}'
-	Command: '{cmd_str}'
-	Command: '{cmd}'
-
-	Return Code: {results["returncode"]}
-
-	Timedout: {results["timedout"]}
-
-	STDOUT: 
-	'''
-	{results["stdout"]}
-	'''
-
-	STDERR: 
-	'''
-	{results["stderr"]}
-	'''
-	"""
-		print(s)
+		print(f"""
+Command: '{cmd_str}'
+Return Code: {results["returncode"]}
+Timedout: {results["timedout"]}
+Output: 
+{results["stdout"]}
+{results["stderr"]}""")
